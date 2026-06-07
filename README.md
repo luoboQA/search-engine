@@ -9,9 +9,11 @@ IDF（逆文档频率）：衡量一个词在整个文档集合中稀不稀有�
 
 算法使用标准的 TF/IDF 评分公式（Python 表示法）：
     sum((文档中词频 / 文档总词数) * log(总文档数 / 包含该词的文档数, 2) 对所有查询词求和)
-$$
+
+
+```math
 \text{score}(D, Q) = \sum_{t \in Q} \left( \frac{f_{t,D}}{|D|} \right) \times \log_2 \left( \frac{N}{df(t)} \right)
-$$
+```
 
 其中：
 - $D$：目标文档
