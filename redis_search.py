@@ -290,12 +290,13 @@ class TestIndex(unittest.TestCase):
     def test_index_basic(self):
         t = ScoredIndexSearch('unittest', 'localhost')
         
-        keys = t.connection.keys('unittest:*')
+        keys = t.connection.keys('unittest:*') # Redis 的 KEYS 命令，匹配所有以 unittest: 开头的键
         if keys:
-            t.connection.delete(*keys)
+            t.connection.delete(*keys) 
 
-        t.add_indexed_item(1, 'hello world')
-        t.add_indexed_item(2, 'this world is nice and you are really special')
+        t.add_indexed_item(1, 'hello world') # 文档1: 两个词，各出现1次，总词数2 → 每个词 TF=0.5
+        t.add_indexed_item(2, 'this world is nice and you are really special') # 文档2: 过滤停用词后剩下 ['world', 'nice', 'really', 'special']
+                                                                               # 总词数4，每个词出现1次 → 每个词 TF=0.25
 
         # 转换搜索结果中的字节串为字符串
         def decode_result(result):
